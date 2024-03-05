@@ -18,7 +18,7 @@ export default {
             default: 'div'
         },
         title: String,
-        CustomSectionClass: String,
+        CustomSectionClass: null,
         id: String,
         CustomTitleClass: String
     }

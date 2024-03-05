@@ -6,7 +6,7 @@ const exchangeRate = {
   },
   mutations: {
     setExchangeData(state, data) {
-      state.exchange = data;
+      state.exchange.push(data);
     },
   },
   actions: {
