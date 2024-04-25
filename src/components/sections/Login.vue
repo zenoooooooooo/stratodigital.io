@@ -13,7 +13,7 @@
                     <div class="w-full max-md:ml-0 max-md:w-full">
                         <label>
                             <p><strong>Password</strong></p>
-                            <input type="password" name="password" :class="inputStyle" required/>
+                            <input type="password" name="password" v-model="password" :class="inputStyle" required/>
                         </label>
                     </div>
                 </div>
@@ -44,7 +44,8 @@ export default {
     data() {
         return {
             inputStyle: "p-2.5 mt-2.5 rounded-lg border border-solid border-stone-300 w-full",
-            emailAddress: ""
+            emailAddress: "",
+            password: ""
         }
     },
     methods: {

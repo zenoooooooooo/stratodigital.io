@@ -1,37 +1,38 @@
 <template>
-    <CustomSection title="Exchange Rate of USD to PHP"
-        CustomTitleClass="pt-0 mx-auto h-auto text-4xl font-semibold text-sky-500 text-center m-20"
-        CustomSectionClass="flex flex-col items-center justify-center py-12 h-auto scroll-mt-1" tag="section">
-        <div
-            class="flex flex-col p-12 lg:m-auto md:m-auto sm:m-auto h-auto rounded-lg border-0 border-solid shadow-lg lg:w-[820px] md:w-[80vw] sm:w-[80vw]">
-            <div>
-    <table class="max-w-full bg-white rounded-lg overflow-hidden shadow-md">
-      <thead>
-        <tr>
-          <th :class="cellStyle">From</th>
-          <th :class="cellStyle">To</th>
-          <th :class="cellStyle">Amount</th>
-          <th :class="cellStyle">Timestamp</th>
-          <th :class="cellStyle">Rate</th>
-          <th :class="cellStyle">Date</th>
-          <th :class="cellStyle">Result</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in exchangeData" :key="item.info.timestamp">
-          <td :class="cellStyle">{{ item.query.from }}</td>
-          <td :class="cellStyle">{{ item.query.to }}</td>
-          <td :class="cellStyle">{{ item.query.amount }}</td>
-          <td :class="cellStyle">{{ item.info.timestamp }}</td>
-          <td :class="cellStyle">{{ item.info.rate }}</td>
-          <td :class="cellStyle">{{ item.date }}</td>
-          <td :class="cellStyle">{{ item.result }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <CustomSection
+    :title="`Foreign Exchange Rate`"
+    CustomTitleClass="pt-0 mx-auto h-auto text-4xl font-semibold text-sky-500 text-center mb-10"
+    CustomSectionClass="flex flex-col lg:p-20 md:p-20 sm:pt-10  bg-blue-50  h-auto scroll-mt-1"
+    tag="section"
+  >
+    <div
+      class="flex flex-col border-l-[20px] mx-auto border-slate-900 p-12 rounded-lg border-0 bg-white border-solid shadow-lg lg:w-[820px] md:w-[80vw] sm:w-[90%]"
+    >
+      <p v-if="exchangeData == 0" class="font-bold text-[20px] text-center">
+        Loading Data...
+      </p>
+      <div class="flex flex-col" v-else>
+        <div v-for="item in exchangeData" :key="item.info.timestamp">
+          <h1
+            class="font-bold text-[25px] font-montserrat text-center bg-gray-200 rounded-lg mb-10 p-4"
+          >
+            {{ item.query.from }} to {{ item.query.to }} as of
+            {{ formatDate(item.date) }}
+          </h1>
+          <div class="flex lg:flex-row md:flex-row sm:flex-col justify-evenly">
+            <p class="mb-4 lg:text-[20px]">
+              <span :class="labelClass">Amount:</span> &#36;{{
+                item.query.amount
+              }}
+            </p>
+            <p class="mb-4 lg:text-[20px]">
+              <span :class="labelClass">Rate:</span> &#8369;{{ item.info.rate }}
+            </p>
+          </div>
         </div>
-    </CustomSection>
+      </div>
+    </div>
+  </CustomSection>
 </template>
 
 <script>
@@ -39,26 +40,42 @@ import CustomSection from "../customComponents/CustomSection.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-    name: "ExchangeRate",
-    data() {
-      return {
-        cellStyle: "border border-gray-300 px-4 py-2 sm:w-1/6 md:w-1/6 lg:w-1/7 xl:w-1/7"
-      }  
+  name: "ExchangeRate",
+  data() {
+    return {
+      isDataLoaded: false,
+      labelClass: "mr-2 font-bold text-[22px] font-montserrat",
+    };
+  },
+  computed: {
+    ...mapGetters(["getExchangeData"]),
+    exchangeData() {
+      return this.getExchangeData;
     },
-    computed: {
-        ...mapGetters(["getExchangeData"]),
-        exchangeData() {
-            return this.getExchangeData;
-        },
-    },
-    components: {
-        CustomSection,
-    },
-    methods: {
-        ...mapActions(["fetchExchangeData"]),
-    },
-    created() {
+  },
+  components: {
+    CustomSection,
+  },
+  methods: {
+    ...mapActions(["fetchExchangeData"]),
+    loadData() {
+      if (!this.isDataLoaded) {
         this.fetchExchangeData();
+        this.isDataLoaded = true;
+      }
     },
+    formatDate(inputDate) {
+      const dateObject = new Date(inputDate);
+
+      return new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }).format(dateObject);
+    },
+  },
+  created() {
+    this.loadData();
+  },
 };
 </script>

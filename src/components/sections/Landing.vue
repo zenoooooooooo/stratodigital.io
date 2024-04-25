@@ -3,7 +3,7 @@
         class="flex flex-row relative text-white bg-center bg-no-repeat bg-cover bg-[url(src/images/bg.png)] h-[1000px] justify-center items-center md:flex md:items-center"
         id="banner">
         <div
-            class="lg:w-[35vw] md:w-[80vw] sm:w-[80vw] lg:ml-auto my-auto flex lg:h-auto flex-col justify-start md:bg-[url(src/images/meteor/meteor.png)] sm:bg-[url(src/images/meteor/meteor.png)] sm:w-full bg-center bg-no-repeat md:h-full sm:h-full lg:bg-none justify-center">
+            class="lg:w-[35vw] md:w-[80vw] sm:w-[80vw] lg:ml-auto my-auto  flex lg:h-auto flex-col justify-start md:bg-[url(src/images/meteor/meteor.png)] sm:bg-[url(src/images/meteor/meteor.png)] sm:w-full bg-center bg-no-repeat md:h-full sm:h-full lg:bg-none justify-center">
             <h1
                 class="font-montserrat font-bold lg:text-7xl mb-5 md:text-center sm:text-center lg:text-left md:text-7xl sm:text-5xl ">
                 BREAKING<br>BARRIERS</h1>
